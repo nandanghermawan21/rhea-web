@@ -1,52 +1,67 @@
 <template>
-  <v-container style="height: 100%">
-    <v-row no-gutters justify="end" align-content="center" style="height: 100%">
-      <v-col cols="12" md="6" lg="5" xl="4">
-        <v-container id="login-container">
-          <v-row justify="center">
-            <img id="logo" src="@/assets/logo_rhea.png" alt="" />
-          </v-row>
-          <v-row justify="center">
-            <label id="tagline">Online Business Approval</label>
-          </v-row>
-          <v-row justify="center">
-            <input
-              class="input-text"
-              type="text"
-              name="username"
-              value=""
-              placeholder="Email RHEA / User Id"
-            />
-          </v-row>
-          <v-row style="height: 24px"></v-row>
-          <v-row justify="center">
-            <input
-              class="input-text"
-              type="text"
-              name="password"
-              value=""
-              placeholder="Password"
-            />
-          </v-row>
-          <v-row style="height: 40px"></v-row>
-          <v-row>
-            <v-btn id="button-login"> <label for="">Masuk</label> </v-btn>
-          </v-row>
-          <v-row style="height: 20px"></v-row>
-          <v-row justify="center">
-            <v-btn id="button-google"
-              ><v-row justify="center" align-content="center">
-                <img style="width: 20px" src="@/assets/google.png" alt="" />
-                <div style="width: 10px"></div>
-                <label style="margin-top: 2px" for="">Masuk</label>
-              </v-row></v-btn
-            >
-          </v-row>
-        </v-container>
-      </v-col>
-    </v-row>
-  </v-container>
+  <v-row id="login-page">
+    <v-container style="height: 100%">
+      <v-row no-gutters justify="end" align-content="center" style="height: 100%">
+        <v-col cols="12" md="6" lg="4" xl="3">
+          <v-container id="login-container">
+            <v-row justify="center">
+              <img id="logo" src="@/assets/logo_rhea.png" alt="" />
+            </v-row>
+            <v-row justify="center">
+              <label id="tagline">Online Business Approval</label>
+            </v-row>
+            <v-row justify="center">
+              <input
+                class="input-text"
+                type="text"
+                name="username"
+                value=""
+                placeholder="Email RHEA / User Id"
+              />
+            </v-row>
+            <v-row style="height: 24px"></v-row>
+            <v-row justify="center">
+              <input
+                class="input-text"
+                type="text"
+                name="password"
+                value=""
+                placeholder="Password"
+              />
+            </v-row>
+            <v-row style="height: 40px"></v-row>
+            <v-row>
+              <v-btn id="button-login" @click="login">
+                <label for="">Masuk</label>
+              </v-btn>
+            </v-row>
+            <v-row style="height: 20px"></v-row>
+            <v-row justify="center">
+              <v-btn id="button-google"
+                ><v-row justify="center" align-content="center">
+                  <img style="width: 20px" src="@/assets/google.png" alt="" />
+                  <div style="width: 10px"></div>
+                  <label style="margin-top: 2px" for="">Masuk Dengan Google</label>
+                </v-row></v-btn
+              >
+            </v-row>
+          </v-container>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-row>
 </template>
+
+<script>
+export default {
+  name: "login",
+  methods: {
+    login: function () {
+      this.$router.push("/home");
+    },
+  },
+};
+</script>
 
 <style>
 body {
@@ -55,11 +70,17 @@ body {
 
 #app {
   height: 100%;
-  background-image: red;
+}
+
+#login-page {
+  height: 100%;
+  width: 100%;
   background-image: url(@/assets/login_background.png);
   background-position: bottom;
   background-size: cover;
   background-repeat: repeat;
+  padding: 0px;
+  margin: 0px;
 }
 
 #logo {
@@ -138,7 +159,7 @@ body {
 }
 
 #button-google {
-  background: #FFFFFF;
+  background: #ffffff;
   box-shadow: 0px 4px 17px rgb(0 0 0 / 8%);
   border-radius: 10px;
   width: calc(100% - 40px);

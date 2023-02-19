@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <MainLayout menuId="1"/>
+  <div class="draft">
+    <MainLayout menuId="3"/>
   </div>
 </template>
 
@@ -9,7 +9,7 @@
 import MainLayout from '@/components/MainLayout.vue'
 
 export default {
-  name: 'HomeView',
+  name: 'DraftView',
   components: {
     MainLayout
   }

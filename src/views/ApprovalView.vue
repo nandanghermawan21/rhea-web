@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <MainLayout menuId="1"/>
+  <div class="approval">
+    <MainLayout menuId="2"/>
   </div>
 </template>
 
@@ -9,7 +9,7 @@
 import MainLayout from '@/components/MainLayout.vue'
 
 export default {
-  name: 'HomeView',
+  name: 'ApprpvalView',
   components: {
     MainLayout
   }
