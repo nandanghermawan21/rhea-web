@@ -13,6 +13,7 @@
         <v-col
           v-for="menu in menus"
           @click="gotoUrl(menu.url)"
+          v-bind:key="menu.id"
           class="main-menu-item"
           :class="{ active: menu.id == menuId }"
           lg="12"
@@ -36,19 +37,26 @@
       <v-row>
         <v-col cols="12" align-self="start">
           <v-row id="nav-header">
-            <v-col style="height: 60px">
-              <v-text-field
-                id="search-box"
-                flat
-                solo
-                label="Cari nomor permohonan"
-                append-icon="mdi-magnify"
-                variant="outlined"
-              ></v-text-field>
+            <v-col style="padding-bottom: 0px">
+              <v-row>
+                <v-col style="height: 60px" cols="12">
+                  <v-text-field
+                    id="search-box"
+                    flat
+                    solo
+                    label="Cari nomor permohonan"
+                    append-icon="mdi-magnify"
+                    variant="outlined"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" class="col-clock">
+                  <v-label id="clock">{{ dateTimeStr }}</v-label>
+                </v-col>
+              </v-row>
             </v-col>
             <v-col id="user-info">
               <v-row>
-                <v-col id="user-info-col" style="text-align: end">
+                <v-col id="user-info-col" style="text-align: end; font-weight: bold">
                   <v-badge
                     style="margin-right: 10px"
                     offset-x="10"
@@ -58,7 +66,7 @@
                   >
                     <img src="/assets/icon-menu-notification.png" alt="" />
                   </v-badge>
-                  <v-text id="user-name">Hi, Ivan Wibowo Hudyana</v-text>
+                  <v-label id="user-name">Hi, Ivan Wibowo Hudyana</v-label>
                 </v-col>
                 <v-col id="use-image" cols="3" md="2" ms="2" lg="1" xl="1">
                   <img style="width: 40px" src="/assets/user-avatar.png" alt="" />
@@ -68,7 +76,7 @@
           </v-row>
         </v-col>
         <v-col id="content-body" cols="12">
-          <v-sheet>test body col</v-sheet>
+          <slot />
         </v-col>
       </v-row>
     </v-col>
@@ -83,6 +91,22 @@ export default {
   },
   data() {
     return {
+      currentdate: new Date(),
+      monthNames: [
+        "Januari",
+        "Februari",
+        "Maret",
+        "April",
+        "Mei",
+        "Juni",
+        "Juli",
+        "Agustus",
+        "September",
+        "Oktober",
+        "November",
+        "Desember",
+      ],
+      dayhNames: ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"],
       menus: [
         {
           id: 1,
@@ -109,6 +133,34 @@ export default {
     gotoUrl: function (url) {
       this.$router.push(url);
     },
+    startClock: function () {
+      setTimeout(() => {
+        this.currentdate = new Date();
+        this.startClock();
+      }, 1000);
+    },
+  },
+  computed: {
+    dateTimeStr() {
+      return (
+        this.dayhNames[this.currentdate.getDay()] +
+        ", " +
+        this.currentdate.getDate() +
+        " " +
+        this.monthNames[this.currentdate.getMonth()] +
+        " " +
+        this.currentdate.getFullYear() +
+        " | " +
+        this.currentdate.getHours() +
+        ":" +
+        this.currentdate.getMinutes() +
+        ":" +
+        this.currentdate.getSeconds()
+      );
+    },
+  },
+  created() {
+    this.startClock();
   },
 };
 </script>
@@ -131,8 +183,9 @@ export default {
 }
 
 #content-body {
-  height: 100vh;
+  height: 87vh;
   width: 100%;
+  overflow-y: scroll;
 }
 
 #nav-bar {
@@ -188,7 +241,7 @@ export default {
 #nav-header {
   align-items: center;
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
   padding-left: 20px;
   padding-right: 20px;
 }
@@ -197,12 +250,29 @@ export default {
   padding-left: 10px;
 }
 
+#clock {
+  font-family: "Product Sans Light";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 18px;
+
+  color: #000000;
+}
+
+.col-clock {
+  text-align: start;
+}
+
+#logo {
+  margin-top: 40px;
+  width: 50%;
+}
+
 @media only screen and (min-width: 601px) {
   #nav-bar {
     height: 100%;
   }
-
-  
 }
 
 @media only screen and (max-width: 601px) {
@@ -241,6 +311,16 @@ export default {
 
   .main-menu-item-row {
     padding-left: 0px;
+  }
+
+  #content-body {
+    height: 63vh;
+    width: 100%;
+    overflow-y: scroll;
+  }
+
+  .col-clock {
+    text-align: center;
   }
 }
 </style>
