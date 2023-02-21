@@ -42,6 +42,7 @@
                 <v-col style="height: 60px" cols="12">
                   <v-text-field
                     id="search-box"
+                    class="text-field"
                     flat
                     solo
                     label="Cari nomor permohonan"
@@ -185,7 +186,6 @@ export default {
 #content-body {
   height: 87vh;
   width: 100%;
-  overflow-y: scroll;
 }
 
 #nav-bar {
@@ -222,12 +222,6 @@ export default {
   color: #000000;
 }
 
-.v-input__slot:has(#search-box) {
-  box-sizing: border-box !important;
-  background: white !important;
-  border: 0.5px solid #004b44 !important;
-  border-radius: 10px !important;
-}
 
 #user-name {
   font-family: "Product Sans";
@@ -269,9 +263,14 @@ export default {
   width: 50%;
 }
 
+
 @media only screen and (min-width: 601px) {
   #nav-bar {
     height: 100%;
+  }
+
+  #content-body {
+    overflow-y: scroll;
   }
 }
 
@@ -316,7 +315,6 @@ export default {
   #content-body {
     height: 63vh;
     width: 100%;
-    overflow-y: scroll;
   }
 
   .col-clock {
