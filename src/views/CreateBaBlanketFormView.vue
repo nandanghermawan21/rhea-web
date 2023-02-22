@@ -52,7 +52,7 @@
                   <label for="daterange">Periode</label>
                   <date-picker
                     id="daterange"
-                    v-model="value1"
+                    v-model="form.periode"
                     type="datetime"
                     placeholder="Select datetime range"
                     range
@@ -60,7 +60,7 @@
                     @close="handleRangeClose"
                     class="text-field"
                     style="margin-top: 10px"
-                    format="YYYY-MM-DD"
+                    format="DD-MM-YYYY"
                   >
                   </date-picker>
                 </v-col>
@@ -74,7 +74,8 @@
                     flat
                     solo
                     variant="outlined"
-                    type="number"
+                    v-model="estTargetValueFormated"
+                    @keypress="filter"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -87,8 +88,9 @@
                     flat
                     solo
                     variant="outlined"
-                    type="number"
                     prepend-icon=""
+                    v-model="estApConversionFormated"
+                    @keypress="filter"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -102,8 +104,8 @@
                     solo
                     variant="outlined"
                     prepend-icon=""
-                    mask="###.###.###-##"
-                    type="number"
+                    v-model="estRatioFormated"
+                    @keypress="filter"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -124,7 +126,7 @@
             </v-container>
             <v-container>
               <v-row>
-                <v-col cols="6" xl="2" lg="2" md="3" sm="3">
+                <v-col style="text-align: start" cols="12">
                   <v-btn
                     style="
                       color: white;
@@ -132,13 +134,12 @@
                       border-radius: 10px;
                       box-shadow: none;
                       border-style: solid;
+                      margin-right: 15px;
                     "
                     color="#004B44"
                     dark
                     >Proses</v-btn
                   >
-                </v-col>
-                <v-col cols="6" xl="2" lg="2" md="3" sm="3">
                   <v-btn
                     style="
                       color: rgb(182, 203, 150);
@@ -175,8 +176,12 @@ export default {
     return {
       showTimePanel: false,
       showTimeRangePanel: false,
-      value1: null,
-      estRatio: 0,
+      form: {
+        periode: null,
+        estTargetValue: null,
+        estApConversion: null,
+        estRatio: null,
+      },
     };
   },
   components: {
@@ -197,14 +202,44 @@ export default {
     handleRangeClose() {
       this.showTimeRangePanel = false;
     },
+    filter: function (evt) {
+      if (!["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"].includes(evt.key)) {
+        evt.preventDefault();
+      }
+    },
+    formatNumber(number) {
+      return number == null || isNaN(number)
+        ? ""
+        : Intl.NumberFormat("ID", { style: "decimal" }).format(number);
+    },
+    parseNumber(value) {
+      value = value.replace(/\D/g, "");
+      return parseFloat(value) != NaN ? parseFloat(value) : null;
+    },
   },
   computed: {
-    estRatioFormated: {
+    estTargetValueFormated: {
       get: function () {
-        return formatAsCurrency(this.estRatio, 0);
+        return this.formatNumber(this.form.estTargetValue);
       },
       set: function (newValue) {
-        this.estRatio = Number(newValue.replace(/[^0-9\.]/g, ""));
+        this.form.estTargetValue = this.parseNumber(newValue);
+      },
+    },
+    estApConversionFormated: {
+      get: function () {
+        return this.formatNumber(this.form.estApConversion);
+      },
+      set: function (newValue) {
+        this.form.estApConversion = this.parseNumber(newValue);
+      },
+    },
+    estRatioFormated: {
+      get: function () {
+        return this.formatNumber(this.form.estRatio);
+      },
+      set: function (newValue) {
+        this.form.estRatio = this.parseNumber(newValue);
       },
     },
   },

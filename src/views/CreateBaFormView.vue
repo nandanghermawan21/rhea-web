@@ -110,7 +110,7 @@
                     @close="handleRangeClose"
                     class="text-field"
                     style="margin-top: 10px"
-                    format="YYYY-MM-DD"
+                    format="DD-MM-YYYY"
                   >
                   </date-picker>
                 </v-col>
@@ -132,24 +132,22 @@
             </v-container>
             <v-container>
               <v-row>
-                <v-col cols="6" xl="2" lg="2" md="3" sm="3">
+                <v-col style="text-align: start" cols="12">
                   <v-btn
-                    id="apply-filter"
                     style="
                       color: white;
                       margin-top: 10px;
                       border-radius: 10px;
                       box-shadow: none;
                       border-style: solid;
+                      margin-right: 15px;
+
                     "
                     color="#004B44"
                     dark
                     >Proses</v-btn
                   >
-                </v-col>
-                <v-col cols="6" xl="2" lg="2" md="3" sm="3">
                   <v-btn
-                    id="apply-filter"
                     style="
                       color: rgb(182, 203, 150);
                       margin-top: 10px;

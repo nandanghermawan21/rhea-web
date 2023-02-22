@@ -62,6 +62,7 @@
                 @close="handleRangeClose"
                 class="text-field"
                 style="margin-top: 10px"
+                format="DD-MM-YYYY"
               >
               </date-picker>
             </v-col>
