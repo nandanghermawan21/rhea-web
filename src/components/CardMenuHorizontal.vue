@@ -7,7 +7,7 @@
     rounded="true"
     :color="badgeCount > 0 ? 'red' : 'transparent'"
   >
-    <v-container class="main-container" :style="mainContainerStyle">
+    <v-container v-on:click="$emit('click')" class="main-container" :style="mainContainerStyle">
       <v-row align-content="center">
         <v-col cols="12" style="display: flex">
           <v-sheet id="menu-icon">
@@ -47,6 +47,9 @@ export default {
     iconClass: function (icon) {
       return "v-icon notranslate mdi " + (icon ?? "mdi-magnify") + " theme--light";
     },
+    click(fx) {
+      fx();
+    }
   },
 };
 </script>

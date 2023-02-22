@@ -16,6 +16,21 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/HomeView.vue')
   },
   {
+    path: '/select-ba-type',
+    name: 'select-ba-type',
+    component: () => import(/* webpackChunkName: "about" */ '../views/SelectBaTypeView.vue')
+  },
+  {
+    path: '/create-ba',
+    name: 'create-ba',
+    component: () => import(/* webpackChunkName: "about" */ '../views/CreateBaFormView.vue')
+  },
+  {
+    path: '/create-ba-blanket',
+    name: 'create-ba-blanket',
+    component: () => import(/* webpackChunkName: "about" */ '../views/CreateBaBlanketFormView.vue')
+  },
+  {
     path: '/approval',
     name: 'approval',
     component: () => import(/* webpackChunkName: "about" */ '../views/ApprovalView.vue')

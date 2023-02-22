@@ -60,12 +60,18 @@
                 range
                 :show-time-panel="showTimeRangePanel"
                 @close="handleRangeClose"
+                class="text-field"
+                style="margin-top: 10px"
               >
               </date-picker>
             </v-col>
             <v-col cols="12" md="2" lg="2" xl="2" sm="12">
               <label for="apply-filter">&nbsp;</label>
-              <v-btn id="apply-filter" style="color: white" color="#004B44" dark
+              <v-btn
+                id="apply-filter"
+                style="color: white; margin-top: 10px; border-radius: 10px"
+                color="#004B44"
+                dark
                 >Terapkan</v-btn
               >
             </v-col>
@@ -153,7 +159,7 @@ export default {
   data() {
     return {
       isMobile: false,
-      isShowFilter: true,
+      isShowFilter: false,
       value1: [new Date(2019, 9, 8), new Date(2019, 9, 19)],
       showTimePanel: false,
       showTimeRangePanel: false,

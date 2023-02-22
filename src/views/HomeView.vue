@@ -5,6 +5,7 @@
         <v-row>
           <v-col cols="12" xl="2" lg="2" md="4" sm="5">
             <CardMenuHorizontal
+               v-on:click="onClickCreateBa"
               iconMdi="mdi-plus"
               backgroundColor="004b44"
               menuLabel="Buat Bussines Approval"
@@ -55,6 +56,11 @@ export default {
     MainLayout,
     CardMenuHorizontal,
     CardDatas,
+  },
+  methods: {
+    onClickCreateBa: function () {
+      this.$router.push("/select-ba-type");
+    },
   },
 };
 </script>

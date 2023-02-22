@@ -42,6 +42,15 @@ export default {
 
 .mx-input {
   height: 100% !important;
+  font-family: "Product Sans Light";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 13px;
+  line-height: 18px;
+  text-align: start;
+  color: #000000;
+  font-weight: bold;
+  background-color: transparent !important;
 }
 
 .text-field .v-input__slot {
@@ -49,6 +58,12 @@ export default {
   background: white !important;
   border: 0.5px solid #004b44 !important;
   border-radius: 10px !important;
+  margin-top: 10px;
+}
+
+.text-field .upload .v-input__slot {
+  border-style: dotted !important;
+  border-width: 2px !important;
 }
 
 .text-field .v-text-field__details {
@@ -128,6 +143,18 @@ export default {
   line-height: 18px;
   text-align: center;
   color: #000000;
+}
+
+button.disabled {
+  background: #ababab !important;
+  border-radius: 10px;
+  font-family: "Product Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 18px;
+  text-align: center;
+  color: #ffffff;
 }
 
 @font-face {
