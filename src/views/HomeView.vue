@@ -5,7 +5,7 @@
         <v-row>
           <v-col cols="12" xl="2" lg="2" md="4" sm="5">
             <CardMenuHorizontal
-               v-on:click="onClickCreateBa"
+              v-on:click="onClickCreateBa"
               iconMdi="mdi-plus"
               backgroundColor="004b44"
               menuLabel="Buat Bussines Approval"
@@ -13,6 +13,7 @@
           </v-col>
           <v-col cols="12" xl="2" lg="2" md="4" sm="5">
             <CardMenuHorizontal
+              v-on:click="onClickNeedApproval"
               iconImage="assets/menu-icon-check.png"
               :menuLabel="'Butuh \n Persetujuan'"
               backgroundColor="004b44"
@@ -28,7 +29,7 @@
             <CardDatas value="10" label="Pending" color="#BBBBBB" />
           </v-col>
           <v-col cols="12" xl="2" lg="2" md="4" sm="5">
-            <CardDatas value="20" label="TDiproses" color="#66CEC4" />
+            <CardDatas value="20" label="Diproses" color="#66CEC4" />
           </v-col>
         </v-row>
         <v-row>
@@ -59,8 +60,22 @@ export default {
   },
   methods: {
     onClickCreateBa: function () {
-      this.$router.push("/select-ba-type");
+      this.$router.push("/select-ba-type").catch((err) => {
+        if (err.name !== "NavigationDuplicated") {
+          return;
+        }
+      });
+    },
+    onClickNeedApproval: function () {
+      this.$router
+        .push({ path: "/approval", query: { status: "needApproval" } })
+        .catch((err) => {
+          if (err.name !== "NavigationDuplicated") {
+            return;
+          }
+        });
     },
   },
+  
 };
 </script>
