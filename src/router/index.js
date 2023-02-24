@@ -36,6 +36,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/DetailBaBlanketView.vue')
   },
   {
+    path: '/detail-ba/:id',
+    name: 'detail-ba',
+    component: () => import(/* webpackChunkName: "about" */ '../views/DetailBaView.vue')
+  },
+  {
     path: '/approval',
     name: 'approval',
     component: () => import(/* webpackChunkName: "about" */ '../views/ApprovalView.vue')

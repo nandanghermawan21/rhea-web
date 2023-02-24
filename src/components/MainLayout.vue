@@ -133,7 +133,7 @@ export default {
         },
         {
           id: 2,
-          title: "Bisnis Approval",
+          title: "Business Approval",
           url: "/approval",
           icon: "icon-menu-approval.png",
         },

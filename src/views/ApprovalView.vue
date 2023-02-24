@@ -123,7 +123,7 @@
                     {{ props.item.status }}
                   </template>
                   <template v-slot:item.action="props">
-                    <v-icon>mdi-eye</v-icon>
+                    <v-icon @click="onTapViewBa(props.item.no)">mdi-eye</v-icon>
                     <v-icon>mdi-square-edit-outline</v-icon>
                   </template>
                   <template v-slot:header="{ props }">
@@ -329,6 +329,13 @@ export default {
     },
     onTapViewBaBlanket(number) {
       this.$router.push({ path: "/detail-ba-blanket/" + number }).catch((err) => {
+        if (err.name !== "NavigationDuplicated") {
+          return;
+        }
+      });
+    },
+    onTapViewBa(number) {
+      this.$router.push({ path: "/detail-ba/" + number }).catch((err) => {
         if (err.name !== "NavigationDuplicated") {
           return;
         }

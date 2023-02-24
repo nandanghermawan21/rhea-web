@@ -3,14 +3,37 @@
     <MainLayout menuId="2">
       <v-container style="padding: 20px; margin: 0px">
         <v-row>
-          <BackNav label="Businsess Approval Blanket" />
+          <BackNav label="Businsess Approval" />
         </v-row>
         <v-row>
           <v-col cols="12" sm="12" md="8" xl="8" lg="8">
             <v-container id="detail-container">
               <v-row id="detail-header">
                 <v-col style="text-align: start">
-                  <v-label>BA Blanket - {{ $route.params.id }}</v-label>
+                  <v-label>BA - {{ $route.params.id }}</v-label>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col
+                  cols="12"
+                  sm="12"
+                  md="4"
+                  xl="5"
+                  lg="3"
+                  style="text-align: justify"
+                  class="detail-title"
+                >
+                  <v-row justify="space-between">
+                    <v-col class="title">
+                      <v-label>Divisi</v-label>
+                    </v-col>
+                    <v-col class="title" cols="1">
+                      <v-label>:</v-label>
+                    </v-col>
+                  </v-row>
+                </v-col>
+                <v-col style="text-align: start" class="value">
+                  <v-label>Sales</v-label>
                 </v-col>
               </v-row>
               <v-row>
@@ -56,7 +79,30 @@
                   </v-row>
                 </v-col>
                 <v-col style="text-align: start" class="value">
-                  <v-label>Presiden Direktur</v-label>
+                  <v-label>Head of Sales</v-label>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col
+                  cols="12"
+                  sm="12"
+                  md="4"
+                  xl="5"
+                  lg="3"
+                  style="text-align: justify"
+                  class="detail-title"
+                >
+                  <v-row justify="space-between">
+                    <v-col class="title">
+                      <v-label>Tanggal Pengajuan</v-label>
+                    </v-col>
+                    <v-col class="title" cols="1">
+                      <v-label>:</v-label>
+                    </v-col>
+                  </v-row>
+                </v-col>
+                <v-col style="text-align: start" class="value">
+                  <v-label>{{ dateTimeStr(new Date()) }}</v-label>
                 </v-col>
               </v-row>
               <v-row>
@@ -144,75 +190,6 @@
                   class="detail-title"
                 >
                   <v-row justify="space-between">
-                    <v-col class="title">
-                      <v-label>Est Target & Value</v-label>
-                    </v-col>
-                    <v-col class="title" cols="1">
-                      <v-label>:</v-label>
-                    </v-col>
-                  </v-row>
-                </v-col>
-                <v-col style="text-align: start" class="value">
-                  <v-label>Rp 4.837.000.000</v-label>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col
-                  cols="12"
-                  sm="12"
-                  md="4"
-                  xl="5"
-                  lg="3"
-                  style="text-align: justify"
-                  class="detail-title"
-                >
-                  <v-row justify="space-between">
-                    <v-col class="title" style="text-align: start">
-                      <v-label>Est Total A&P Comversion</v-label>
-                    </v-col>
-                    <v-col class="title" cols="1">
-                      <v-label>:</v-label>
-                    </v-col>
-                  </v-row>
-                </v-col>
-                <v-col style="text-align: start" class="value">
-                  <v-label>Rp 470.000.000</v-label>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col
-                  cols="12"
-                  sm="12"
-                  md="4"
-                  xl="5"
-                  lg="3"
-                  style="text-align: justify"
-                  class="detail-title"
-                >
-                  <v-row justify="space-between">
-                    <v-col class="title" style="text-align: start">
-                      <v-label>Cost Ratio</v-label>
-                    </v-col>
-                    <v-col class="title" cols="1">
-                      <v-label>:</v-label>
-                    </v-col>
-                  </v-row>
-                </v-col>
-                <v-col style="text-align: start" class="value">
-                  <v-label>9,7%</v-label>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col
-                  cols="12"
-                  sm="12"
-                  md="4"
-                  xl="5"
-                  lg="3"
-                  style="text-align: justify"
-                  class="detail-title"
-                >
-                  <v-row justify="space-between">
                     <v-col class="title" style="text-align: start">
                       <v-label>Rincian Biaya</v-label>
                     </v-col>
@@ -232,13 +209,13 @@
             </v-container>
             <v-row justify="space-between" style="margin-top: 20px">
               <v-col style="text-align: start">
-                <v-btn id="btn-filter" @click="back" color="#004B44" dark
-                  ><v-icon></v-icon><v-label>Kembali</v-label></v-btn
+                <v-btn id="btn-filter" color="#004B44" dark
+                  ><v-icon></v-icon><v-label>Setujui</v-label></v-btn
                 >
               </v-col>
               <v-col style="text-align: end">
                 <v-btn id="btn-filter" color="red" dark
-                  ><v-icon></v-icon><v-label>Nonaktifkan</v-label></v-btn
+                  ><v-icon></v-icon><v-label>Tolak</v-label></v-btn
                 >
               </v-col>
             </v-row>
