@@ -33,7 +33,7 @@
         </v-col>
       </v-row>
     </v-col>
-    <v-col id="nav-body">
+    <v-col id="nav-body" xl="10" lg="10" sm="8" md="9">
       <v-row>
         <v-col cols="12" align-self="start">
           <v-row id="nav-header">
@@ -45,9 +45,11 @@
                     class="text-field"
                     flat
                     solo
+                    v-model="searchKey"
                     label="Cari nomor permohonan"
                     append-icon="mdi-magnify"
                     variant="outlined"
+                    @click:append="onClickSearch(searchKey)"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" class="col-clock">
@@ -59,6 +61,7 @@
               <v-row>
                 <v-col id="user-info-col" style="text-align: end; font-weight: bold">
                   <v-badge
+                    id="menu-activator"
                     style="margin-right: 10px"
                     offset-x="10"
                     offset-y="10"
@@ -67,6 +70,18 @@
                   >
                     <img src="/assets/icon-menu-notification.png" alt="" />
                   </v-badge>
+                  <v-menu activator="#menu-activator">
+                    <v-list>
+                      <v-list-item
+                        style="width: 30vw; min-width: 320px"
+                        v-for="(item, index) in notification"
+                        :key="index"
+                        :value="index"
+                      >
+                        <v-label style="margin-right=10px;">{{ item.title }}</v-label>
+                      </v-list-item>
+                    </v-list>
+                  </v-menu>
                   <v-label id="user-name">Hi, Ivan Wibowo Hudyana</v-label>
                 </v-col>
                 <v-col id="use-image" cols="3" md="2" ms="2" lg="1" xl="1">
@@ -93,6 +108,7 @@ export default {
   data() {
     return {
       currentdate: new Date(),
+      searchKey: "",
       monthNames: [
         "Januari",
         "Februari",
@@ -128,17 +144,34 @@ export default {
           icon: "icon-menu-draft.png",
         },
       ],
+      notification: [
+        { title: "Ada 1 BA Baru yang memerlukan persetujuan anda" },
+        { title: "BA dengan nomor 1234 telah disetujui" },
+        { title: "Ada 1 BA Baru yang memerlukan persetujuan anda" },
+        { title: "BA dengan nomor 1234 telah ditolak" },
+      ],
     };
   },
   methods: {
     gotoUrl: function (url) {
-      this.$router.push(url);
+      this.$router.push(url).catch((err) => {
+        if (err.name !== "NavigationDuplicated") {
+          return;
+        }
+      });
     },
     startClock: function () {
       setTimeout(() => {
         this.currentdate = new Date();
         this.startClock();
       }, 1000);
+    },
+    onClickSearch: function (key) {
+      this.$router.push({ path: "/approval", query: { search: key } }).catch((err) => {
+        if (err.name !== "NavigationDuplicated") {
+          return;
+        }
+      });
     },
   },
   computed: {
@@ -222,7 +255,6 @@ export default {
   color: #000000;
 }
 
-
 #user-name {
   font-family: "Product Sans";
   font-style: normal;
@@ -262,7 +294,6 @@ export default {
   margin-top: 40px;
   width: 50%;
 }
-
 
 @media only screen and (min-width: 601px) {
   #nav-bar {

@@ -157,6 +157,10 @@ button.disabled {
   color: #ffffff;
 }
 
+.v-input--checkbox {
+  margin: 0px !important;
+}
+
 @font-face {
   font-family: "Product Sans Bold Italic";
   src: url("assets/fonts/Product Sans Bold Italic.ttf");
