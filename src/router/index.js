@@ -31,6 +31,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/CreateBaBlanketFormView.vue')
   },
   {
+    path: '/detail-ba-blanket/:id',
+    name: 'detail-ba-blanket',
+    component: () => import(/* webpackChunkName: "about" */ '../views/DetailBaBlanketView.vue')
+  },
+  {
     path: '/approval',
     name: 'approval',
     component: () => import(/* webpackChunkName: "about" */ '../views/ApprovalView.vue')

@@ -80,6 +80,7 @@
         </v-row>
         <v-container id="container-table">
           <v-data-table
+            id="table-blanket"
             :headers="headers"
             hide-default-footer
             :items="desserts"
@@ -90,9 +91,20 @@
             class="elevation-1"
           >
             >
+            <template v-slot:item.status="props">
+              <v-icon :color="createStatusIconColor(props.item.status)">{{
+                createStatusIcon(props.item.status)
+              }}</v-icon>
+              {{ props.item.status }}
+            </template>
+            <template v-slot:item.action="props">
+              <v-icon @click="onTapViewBaBlanket(props.item.no)">mdi-eye</v-icon>
+              <v-icon>mdi-square-edit-outline</v-icon>
+            </template>
             <template v-slot:expanded-item="{ headers, item }">
               <td style="margin: 0px; padding: 0px" :colspan="headers.length">
                 <v-data-table
+                  id="table-ba"
                   class="detail-table"
                   :hide-default-header="!isMobile"
                   hide-default-footer
@@ -104,6 +116,16 @@
                   item-key="no"
                   group-header-text="judul"
                 >
+                  <template v-slot:item.status="props">
+                    <v-icon :color="createStatusIconColor(props.item.status)">{{
+                      createStatusIcon(props.item.status)
+                    }}</v-icon>
+                    {{ props.item.status }}
+                  </template>
+                  <template v-slot:item.action="props">
+                    <v-icon>mdi-eye</v-icon>
+                    <v-icon>mdi-square-edit-outline</v-icon>
+                  </template>
                   <template v-slot:header="{ props }">
                     <th
                       v-for="head in props.headers"
@@ -179,7 +201,7 @@ export default {
           judul: "A&P Awareness 2H 2022",
           tanggal: this.dateTimeStr(new Date()),
           tipe: 24,
-          status: "sts-diproses",
+          status: "diproses",
           action: "action",
           detail: [
             {
@@ -187,7 +209,7 @@ export default {
               judul: "A&P Awareness 2H 2022",
               tanggal: this.dateTimeStr(new Date()),
               tipe: 24,
-              status: "sts-disetuji",
+              status: "disetuji",
               action: "action",
             },
             {
@@ -195,7 +217,7 @@ export default {
               judul: "A&P Awareness 2H 2022",
               tanggal: this.dateTimeStr(new Date()),
               tipe: 24,
-              status: "sts-ditolak",
+              status: "ditolak",
               action: "action",
             },
           ],
@@ -205,7 +227,7 @@ export default {
           judul: "A&P Awareness 2H 2022",
           tanggal: this.dateTimeStr(new Date()),
           tipe: 24,
-          status: "sts-disetuji",
+          status: "disetuji",
           action: "action",
           detail: [
             {
@@ -213,7 +235,7 @@ export default {
               judul: "A&P Awareness 2H 2022",
               tanggal: this.dateTimeStr(new Date()),
               tipe: 24,
-              status: "sts-diproses",
+              status: "diproses",
               action: "action",
             },
           ],
@@ -271,34 +293,31 @@ export default {
         date.getSeconds()
       );
     },
-    generateActionGrid() {
-      this.$el.querySelectorAll("#container-table tbody td").forEach((e) => {
-        if (e.innerHTML == "action") {
-          e.innerHTML =
-            '<v-col style="text-align:center">' +
-            '<button style="margin-right:5px" type="button" class="v-icon notranslate basic-label v-icon--link mdi mdi-eye theme--light"></button>' +
-            '<button style="margin-left:5px" type="button" class="v-icon notranslate basic-label v-icon--link mdi mdi-square-edit-outline theme--light"></button>' +
-            "</v-col>";
-        }
+    createStatusIcon(status) {
+      if (status == "disetuji") {
+        return "mdi-check-circle-outline";
+      }
 
-        if (e.innerHTML == "sts-disetuji") {
-          e.innerHTML =
-            '<button style="margin-right:5px; color:green" type="button" class="v-icon notranslate basic-label v-icon--link mdi mdi-check-circle-outline theme--light"></button>' +
-            " disetujui";
-        }
+      if (status == "ditolak") {
+        return "mdi-close-circle-outline";
+      }
 
-        if (e.innerHTML == "sts-ditolak") {
-          e.innerHTML =
-            '<button style="margin-right:5px; color:red" type="button" class="v-icon notranslate basic-label v-icon--link mdi mdi-close-circle-outline theme--light"></button>' +
-            " disetujui";
-        }
+      if (status == "diproses") {
+        return "mdi-progress-clock";
+      }
+    },
+    createStatusIconColor(status) {
+      if (status == "disetuji") {
+        return "green";
+      }
 
-        if (e.innerHTML == "sts-diproses") {
-          e.innerHTML =
-            '<button style="margin-right:5px; color:blue" type="button" class="v-icon notranslate basic-label v-icon--link mdi mdi-progress-clock theme--light"></button>' +
-            " disetujui";
-        }
-      });
+      if (status == "ditolak") {
+        return "red";
+      }
+
+      if (status == "diproses") {
+        return "blue";
+      }
     },
     handleExpansion(item, state) {
       const itemIndex = this.expanded.indexOf(item);
@@ -308,17 +327,21 @@ export default {
       this.isMobile = window.innerWidth < 768;
       this.isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
     },
+    onTapViewBaBlanket(number) {
+      this.$router.push({ path: "/detail-ba-blanket/" + number }).catch((err) => {
+        if (err.name !== "NavigationDuplicated") {
+          return;
+        }
+      });
+    },
   },
-  mounted() {
-    this.generateActionGrid();
-  },
-  updated() {
-    this.generateActionGrid();
-  },
+  mounted() {},
+  updated() {},
   created() {
     this.updateDimensions();
     window.addEventListener("resize", this.updateDimensions);
   },
+  computed: {},
 };
 </script>
 
