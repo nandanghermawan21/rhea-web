@@ -87,6 +87,16 @@
                 <v-col id="use-image" cols="3" md="2" ms="2" lg="1" xl="1">
                   <img style="width: 40px" src="/assets/user-avatar.png" alt="" />
                 </v-col>
+                <v-menu activator="#use-image">
+                  <v-list>
+                    <v-list-item
+                      @click="Logout"
+                      style="min-width: 20vw; min-width: 200px"
+                    >
+                      <v-label style="margin-right=10px;">Logout</v-label>
+                    </v-list-item>
+                  </v-list>
+                </v-menu>
               </v-row>
             </v-col>
           </v-row>
@@ -172,6 +182,10 @@ export default {
           return;
         }
       });
+    },
+    Logout: function () {
+      this.$cookie.delete("token");
+      this.$router.replace({ path: "/", query: {} });
     },
   },
   computed: {
@@ -295,6 +309,10 @@ export default {
   width: 50%;
 }
 
+.v-menu__content {
+  top: 80px !important;
+}
+
 @media only screen and (min-width: 601px) {
   #nav-bar {
     height: 100%;
@@ -350,6 +368,10 @@ export default {
 
   .col-clock {
     text-align: center;
+  }
+
+  .v-menu__content {
+    top: 50px !important;
   }
 }
 </style>

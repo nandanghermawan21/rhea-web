@@ -10,8 +10,17 @@
             <v-row justify="center">
               <label id="tagline">Online Business Approval</label>
             </v-row>
+            <v-alert
+              v-if="errorMessage != ''"
+              style="margin-bottom: 50px; padding-right: 50px"
+              closable
+              title="Alert title"
+              type="error"
+              ><div class="error_text">{{ this.errorMessage }}</div></v-alert
+            >
             <v-row justify="center">
               <input
+                v-model="email"
                 class="input-text"
                 type="text"
                 name="username"
@@ -22,8 +31,9 @@
             <v-row style="height: 24px"></v-row>
             <v-row justify="center">
               <input
+                v-model="password"
                 class="input-text"
-                type="text"
+                type="password"
                 name="password"
                 value=""
                 placeholder="Password"
@@ -32,18 +42,24 @@
             <v-row style="height: 40px"></v-row>
             <v-row>
               <v-btn id="button-login" @click="login">
-                <label for="">Masuk</label>
+                <label v-if="isLoading === false" for="">Masuk</label>
+                <v-progress-circular
+                  v-if="isLoading === true"
+                  indeterminate
+                ></v-progress-circular>
               </v-btn>
             </v-row>
             <v-row style="height: 20px"></v-row>
             <v-row justify="center">
-              <v-btn id="button-google"
-                ><v-row justify="center" align-content="center">
-                  <img style="width: 20px" src="@/assets/google.png" alt="" />
-                  <div style="width: 10px"></div>
-                  <label style="margin-top: 2px" for="">Masuk Dengan Google</label>
-                </v-row></v-btn
-              >
+              <v-btn id="button-google">
+                <a :href="googleSign(from)">
+                  <v-row justify="center" align-content="center">
+                    <img style="width: 20px" src="@/assets/google.png" alt="" />
+                    <div style="width: 10px"></div>
+                    <label style="margin-top: 2px" for="">Masuk Dengan Google</label>
+                  </v-row>
+                </a>
+              </v-btn>
             </v-row>
           </v-container>
         </v-col>
@@ -53,12 +69,112 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "login",
+  data() {
+    return {
+      isLoading: false,
+      email: "",
+      password: "",
+      errorMessage: "",
+      from: "/",
+    };
+  },
   methods: {
-    login: function () {
-      this.$router.push("/home");
+    login: async function () {
+      this.errorMessage = "";
+      if (this.isLoading == true) return;
+
+      if (this.email == "" || this.password == "") {
+        this.isLoading = false;
+        this.errorMessage = "harap isi email dan password";
+        return;
+      }
+
+      this.isLoading = true;
+      try {
+        axios
+          .post("/auth/login", {
+            email: this.email,
+            password: this.password,
+          })
+          .then((result) => {
+            this.isLoading = false;
+            console.log(result);
+            this.$store.dispatch("simpanUser", result.data);
+            this.$cookie.set("token", result.data.token, 1);
+            this.$router.replace("/home");
+          })
+          .catch((err) => {
+            this.errorMessage = err.response.data;
+            this.isLoading = false;
+          });
+      } catch (error) {
+        this.isLoading = false;
+      }
     },
+    loginWithGoogle: function (code) {
+      this.isLoading = true;
+      axios
+        .get("/auth/login-with-google?code=" + code, {})
+        .then((result) => {
+          this.isLoading = false;
+          console.log(result);
+          this.$store.dispatch("simpanUser", result.data);
+          this.$cookie.set("token", result.data.token, 1);
+          // this.$router.replace({ path: "/home", query: { foo: "bar" } });
+          window.location.href = "/home";
+        })
+        .catch((err) => {
+          console.log(err);
+          this.errorMessage = err.response.data;
+          this.isLoading = false;
+        });
+    },
+    googleSign: function (form) {
+      const rootUrl = `https://accounts.google.com/o/oauth2/v2/auth`;
+
+      const options = {
+        redirect_uri: "http://localhost:8081/",
+        client_id:
+          "517368918871-08bblrabui7qvsqgvqpd11gvppprsm00.apps.googleusercontent.com",
+        access_type: "offline",
+        response_type: "code",
+        prompt: "consent",
+        scope: [
+          "https://www.googleapis.com/auth/userinfo.profile",
+          "https://www.googleapis.com/auth/userinfo.email",
+        ].join(" "),
+        state: form,
+      };
+
+      const qs = new URLSearchParams(options);
+
+      return `${rootUrl}?${qs.toString()}`;
+    },
+  },
+  beforeMount() {
+    if (this.$cookie.get("token") != null) {
+      this.$router.replace({ path: "/home", query: {} });
+    }
+  },
+  mounted() {
+    console.log("mounted hook");
+
+    // Membuat objek URLSearchParams dari query string di URL
+    const params = new URLSearchParams(window.location.search);
+
+    // Mendapatkan nilai dari query parameter 'code'
+    const code = params.get("code");
+
+    if (code != null) {
+      this.isLoading = true;
+      setTimeout(() => {
+        this.loginWithGoogle(code);
+      }, 2000);
+    }
   },
 };
 </script>
@@ -175,5 +291,14 @@ body {
   text-align: center;
 
   color: #000000;
+}
+
+.error_text {
+  color: white;
+  font-style: unset;
+  font-weight: bold;
+  font-family: "Montserrat";
+  font-style: "regular";
+  font-weight: 700;
 }
 </style>
