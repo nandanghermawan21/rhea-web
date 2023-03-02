@@ -309,10 +309,6 @@ export default {
   width: 50%;
 }
 
-.v-menu__content {
-  top: 80px !important;
-}
-
 @media only screen and (min-width: 601px) {
   #nav-bar {
     height: 100%;
@@ -368,10 +364,6 @@ export default {
 
   .col-clock {
     text-align: center;
-  }
-
-  .v-menu__content {
-    top: 50px !important;
   }
 }
 </style>
